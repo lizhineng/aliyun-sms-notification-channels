@@ -3,7 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/aliyun-sms.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/aliyun-sms)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/laravel-notification-channels/aliyun-sms/run-tests?style=flat-square)
-[![StyleCI](https://styleci.io/repos/:style_ci_id/shield)](https://styleci.io/repos/:style_ci_id)
+[![StyleCI](https://styleci.io/repos/157489842/shield)](https://styleci.io/repos/157489842)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/:sensio_labs_id.svg?style=flat-square)](https://insight.sensiolabs.com/projects/:sensio_labs_id)
 [![Quality Score](https://img.shields.io/scrutinizer/g/laravel-notification-channels/aliyun-sms.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/aliyun-sms)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/aliyun-sms/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/aliyun-sms/?branch=master)
