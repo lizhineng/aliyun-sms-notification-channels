@@ -60,7 +60,7 @@ class TestNotifiable
 {
     use Notifiable;
 
-    public function routeNotificationForAliyunSms($notification)
+    public function routeNotificationForAliyunSms()
     {
         return '11111111111';
     }
