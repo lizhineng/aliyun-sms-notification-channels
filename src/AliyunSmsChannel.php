@@ -5,8 +5,8 @@ namespace NotificationChannels\AliyunSms;
 use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
 use AlibabaCloud\Client\Request\RpcRequest;
-use NotificationChannels\AliyunSms\Exceptions\CouldNotSendNotification;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\AliyunSms\Exceptions\CouldNotSendNotification;
 
 class AliyunSmsChannel
 {
@@ -36,7 +36,7 @@ class AliyunSmsChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        if (!$to = $notifiable->routeNotificationFor('aliyun-sms', $notification)) {
+        if (! $to = $notifiable->routeNotificationFor('aliyun-sms', $notification)) {
             return;
         }
 
