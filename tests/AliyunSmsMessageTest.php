@@ -2,8 +2,8 @@
 
 namespace Zhineng\NotificationChannels\AliyunSms\Test;
 
-use Zhineng\NotificationChannels\AliyunSms\AliyunSmsMessage;
 use PHPUnit\Framework\TestCase;
+use Zhineng\NotificationChannels\AliyunSms\AliyunSmsMessage;
 
 class AliyunSmsMessageTest extends TestCase
 {
