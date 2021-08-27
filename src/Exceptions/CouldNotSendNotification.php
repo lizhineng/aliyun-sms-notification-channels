@@ -1,25 +1,17 @@
 <?php
 
-namespace NotificationChannels\AliyunSms\Exceptions;
+namespace Zhineng\NotificationChannels\AliyunSms\Exceptions;
 
-use AlibabaCloud\Client\Exception\ClientException;
-use AlibabaCloud\Client\Exception\ServerException;
+use AlibabaCloud\Tea\Exception\TeaUnableRetryError;
+use Exception;
 
-class CouldNotSendNotification extends \Exception
+class CouldNotSendNotification extends Exception
 {
-    public static function serviceRespondedWithAnError(ClientException $e)
+    public static function make(TeaUnableRetryError $e)
     {
-        $description = $e->getErrorMessage();
-        $code = $e->getErrorCode();
+        $code = $e->getCode();
+        $description = $e->getMessage();
 
         return new static("Aliyun SMS server responded with an error [{$code}], ${description}");
-    }
-
-    public static function couldNotCommunicateWithAliyunSms(ServerException $e)
-    {
-        $message = $e->getErrorMessage();
-        $code = $e->getErrorCode();
-
-        return new static("Failed to communicate with Aliyun SMS server [${code}], ${message}");
     }
 }

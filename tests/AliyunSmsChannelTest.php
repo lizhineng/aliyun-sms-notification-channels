@@ -1,49 +1,33 @@
 <?php
 
-namespace NotificationChannels\AliyunSms\Test;
+namespace Zhineng\NotificationChannels\AliyunSms\Test;
 
-use AlibabaCloud\Client\Request\RpcRequest;
+use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
+use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
-use Mockery;
-use NotificationChannels\AliyunSms\AliyunSmsChannel;
-use NotificationChannels\AliyunSms\AliyunSmsMessage;
 use PHPUnit\Framework\TestCase;
+use Zhineng\NotificationChannels\AliyunSms\AliyunSmsChannel;
+use Zhineng\NotificationChannels\AliyunSms\AliyunSmsMessage;
 
 class AliyunSmsChannelTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
-    }
-
-    public function testItCanSendMessage()
+    public function test_sends_notification()
     {
         $notifiable = new TestNotifiable;
 
-        $channel = new AliyunSmsChannel(
-            $aliyun = Mockery::mock(RpcRequest::class)
-        );
+        $client = $this->getMockBuilder(Dysmsapi::class)->disableOriginalConstructor()->getMock();
+        $channel = new AliyunSmsChannel($client);
 
-        $aliyun->expects('client')->with('aliyun-sms')->andReturnSelf();
-        $aliyun->expects('product')->with('Dysmsapi')->andReturnSelf();
-        $aliyun->expects('version')->with('2017-05-25')->andReturnSelf();
-        $aliyun->expects('action')->with('SendSms')->andReturnSelf();
-        $aliyun->expects('method')->with('POST')->andReturnSelf();
-        $aliyun->expects('host')->with('dysmsapi.aliyuncs.com')->andReturnSelf();
-        $aliyun->expects('options')->with([
-            'query' => [
-                'RegionId' => 'cn-hangzhou',
-                'PhoneNumbers' => '11111111111',
-                'SignName' => 'baz',
-                'TemplateCode' => 'SMS_1234',
-                'TemplateParam' => json_encode(['foo' => 'bar']),
-                'OutId' => null,
-            ],
-        ])->andReturnSelf();
-        $aliyun->expects('request')->once();
+        $client->expects($this->once())
+            ->method('sendSms')
+            ->with(new SendSmsRequest([
+                'phoneNumbers' => '11111111111',
+                'signName' => 'baz',
+                'templateCode' => 'SMS_1234',
+                'templateParam' => json_encode(['foo' => 'bar']),
+                'outId' => 'unique-serial-id',
+            ]));
 
         $channel->send($notifiable, new TestNotification);
 
@@ -68,11 +52,12 @@ class TestNotifiable
 
 class TestNotification extends Notification
 {
-    public function toAliyunSms()
+    public function toAliyunSms($notifiable): AliyunSmsMessage
     {
         return (new AliyunSmsMessage)
             ->using('SMS_1234')
             ->with(['foo' => 'bar'])
-            ->signedBy('baz');
+            ->signedBy('baz')
+            ->serialNumber('unique-serial-id');
     }
 }

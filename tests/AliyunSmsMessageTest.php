@@ -1,14 +1,13 @@
 <?php
 
-namespace NotificationChannels\AliyunSms\Test;
+namespace Zhineng\NotificationChannels\AliyunSms\Test;
 
-use NotificationChannels\AliyunSms\AliyunSmsMessage;
+use Zhineng\NotificationChannels\AliyunSms\AliyunSmsMessage;
 use PHPUnit\Framework\TestCase;
 
 class AliyunSmsMessageTest extends TestCase
 {
-    /** @var AliyunSmsMessage */
-    protected $message;
+    protected AliyunSmsMessage $message;
 
     public function setUp(): void
     {
@@ -18,26 +17,26 @@ class AliyunSmsMessageTest extends TestCase
             ->using('SMS_1234')
             ->with(['foo' => 'bar'])
             ->signedBy('baz')
-            ->serialNumber('PO-001');
+            ->serialNumber('uuid');
     }
 
-    public function testHasTemplateCode()
+    public function test_has_template_id()
     {
         $this->assertEquals('SMS_1234', $this->message->templateId);
     }
 
-    public function testHasTemplateParameters()
+    public function test_has_payload()
     {
-        $this->assertEquals(['foo' => 'bar'], $this->message->params);
+        $this->assertEquals(['foo' => 'bar'], $this->message->payload);
     }
 
-    public function testHasSignature()
+    public function test_has_signature()
     {
         $this->assertEquals('baz', $this->message->signature);
     }
 
-    public function testHasSerialNumber()
+    public function test_has_serial_number()
     {
-        $this->assertEquals('PO-001', $this->message->serialNumber);
+        $this->assertEquals('uuid', $this->message->serialNumber);
     }
 }

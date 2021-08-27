@@ -1,15 +1,6 @@
-# Aliyun SMS Notification Channel for Laravel
+# Sending SMS notification through Aliyun SMS in Laravel.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/aliyun-sms.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/aliyun-sms)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/laravel-notification-channels/aliyun-sms/run-tests?style=flat-square)
-[![StyleCI](https://styleci.io/repos/157489842/shield)](https://styleci.io/repos/157489842)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/:sensio_labs_id.svg?style=flat-square)](https://insight.sensiolabs.com/projects/:sensio_labs_id)
-[![Quality Score](https://img.shields.io/scrutinizer/g/laravel-notification-channels/aliyun-sms.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/aliyun-sms)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/aliyun-sms/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/aliyun-sms/?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/aliyun-sms.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/aliyun-sms)
-
-This package makes it easy to send notifications using [Aliyun SMS](https://cn.aliyun.com/product/sms) with Laravel 5.5+, 6.x, 7.x and 8.x, and requires PHP 7.1+
+This package makes it easy to send notifications using [Aliyun SMS service](https://cn.aliyun.com/product/sms) with Laravel 8.x, and also requires PHP 8.0+.
 
 ## Contents
 
@@ -29,12 +20,12 @@ This package makes it easy to send notifications using [Aliyun SMS](https://cn.a
 You can install the package via Composer:
 
 ```bash
-composer require laravel-notification-channels/aliyun-sms
+composer require lizhineng/notification-channel-aliyun-sms
 ```
 
 ### Setting up the Aliyun SMS service
 
-Generate your credentials from your Aliyun console, then configure the services file...
+Generate your API credentials from your Aliyun console, then configure the services file...
 
 ```php
 // config/services.php
@@ -51,12 +42,12 @@ Generate your credentials from your Aliyun console, then configure the services 
 
 ## Usage
 
-You can now use the channel in your `via()` method inside the notification. **Note**, before you can successfully send the message out, according to the Aliyun regulation, you need to apply the template to review first.
+You can now use the channel in your `via()` method inside the notification. **Note**, before you can successfully send the message out, according to the Aliyun regulation, you need to apply the template to be reviewed first.
 
 ```php
 use Illuminate\Notifications\Notification;
-use NotificationChannels\AliyunSms\AliyunSmsChannel;
-use NotificationChannels\AliyunSms\AliyunSmsMessage;
+use Zhineng\NotificationChannels\AliyunSms\AliyunSmsChannel;
+use Zhineng\NotificationChannels\AliyunSms\AliyunSmsMessage;
 
 class OrderPlaced extends Notification
 {
@@ -69,15 +60,17 @@ class OrderPlaced extends Notification
     {
         return (new AliyunSmsMessage)
             ->using('SMS_TEMPLATE_CODE')
-            ->params(['if' => 'any'])
-            ->signedBy('YOUR_SIGNATURE');
+            ->with(['if' => 'any'])
+            ->signedBy('YOUR_PERMITTED_SIGNATURE');
     }   
 }
 ```
 
-In order to let the notification know who's the recipient, add the method `routeNotificationForAliyun` to your notifiable class.
+In order to let the channel know who's the recipient, add the method `routeNotificationForAliyunSms` to your notifiable class.
 
 ```php
+// App\Models\User.php
+
 public function routeNotificationForAliyunSms($notification)
 {
     return $this->phone_number;
@@ -87,7 +80,7 @@ public function routeNotificationForAliyunSms($notification)
 ### Available message methods
 
 * `using(string $templateCode)`: Accepts the SMS template code.
-* `with(array $parameters)`: The parameters which needs to be injected into the template.
+* `with(array $payload)`: The parameters which needs to be injected into the template.
 * `signedBy(string $signature)`: The name of the sender, which also needs to be reviewed first.
 * `serialNumber(string $serialNumber)`: The order number, uuid, you name it.
 

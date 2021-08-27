@@ -1,7 +1,7 @@
 # Changelog
 
-All notable changes to `aliyun-sms` will be documented in this file
+All notable changes to `notification-channel-aliyun-sms` package will be documented in this file.
 
-## 1.0.0 - 201X-XX-XX
+## 0.0.1 - 2021-08-27
 
 - initial release

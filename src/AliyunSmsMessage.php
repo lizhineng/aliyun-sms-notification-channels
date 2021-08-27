@@ -1,39 +1,39 @@
 <?php
 
-namespace NotificationChannels\AliyunSms;
+namespace Zhineng\NotificationChannels\AliyunSms;
 
 class AliyunSmsMessage
 {
     /**
-     * The message template id.
+     * The message template code.
      *
      * @var string
      */
-    public $templateId;
+    public string $templateId;
 
     /**
      * The parameters of the message.
      *
      * @var array
      */
-    public $params = [];
+    public array $payload = [];
 
     /**
      * The signature of the message.
      *
      * @var string
      */
-    public $signature;
+    public string $signature;
 
     /**
      * The serial number you can mark the message.
      *
      * @var string|null
      */
-    public $serialNumber;
+    public ?string $serialNumber = null;
 
     /**
-     * Set the SMS template id.
+     * Set the SMS template code.
      *
      * @param  string  $templateId
      * @return $this
@@ -46,14 +46,14 @@ class AliyunSmsMessage
     }
 
     /**
-     * Set the params for the message.
+     * Set the payload for the message.
      *
-     * @param  array  $params
+     * @param  array  $payload
      * @return $this
      */
-    public function with(array $params)
+    public function with(array $payload)
     {
-        $this->params = $params;
+        $this->payload = $payload;
 
         return $this;
     }
@@ -77,7 +77,7 @@ class AliyunSmsMessage
      * @param  string  $serialNumber
      * @return $this
      */
-    public function serialNumber($serialNumber)
+    public function serialNumber(string $serialNumber)
     {
         $this->serialNumber = $serialNumber;
 
