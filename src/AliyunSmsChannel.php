@@ -28,14 +28,15 @@ class AliyunSmsChannel
     {
         $message = $notification->toAliyunSms($notifiable);
 
-        if (! ($to = $notifiable->routeNotificationFor('aliyun-sms', $notification)) &&
-            ! $message instanceof AliyunSmsMessage) {
+        $phoneNumber = $notifiable->routeNotificationFor('aliyun-sms', $notification);
+
+        if (! $phoneNumber && ! $message instanceof AliyunSmsMessage) {
             return;
         }
 
         try {
             $this->client->sendSms(new SendSmsRequest([
-                'phoneNumbers' => $to,
+                'phoneNumbers' => $phoneNumber,
                 'signName' => $message->signature,
                 'templateCode' => $message->templateId,
                 'templateParam' => json_encode($message->payload),
