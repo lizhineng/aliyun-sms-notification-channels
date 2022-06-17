@@ -1,6 +1,6 @@
-# Sending SMS notification through Aliyun SMS in Laravel.
+# Sending SMS through Alibaba Cloud in Laravel.
 
-This package makes it easy to send notifications using [Aliyun SMS service](https://cn.aliyun.com/product/sms) with Laravel 8.x, and also requires PHP 8.0+.
+This package makes it easy to send notifications using [Alibaba Cloud Short Message Service](https://cn.aliyun.com/product/sms) with Laravel 9.x, and also requires PHP 8.0+.
 
 ## Contents
 
@@ -33,8 +33,8 @@ Generate your API credentials from your Aliyun console, then configure the servi
 ...
 
 'aliyun_sms' => [
-    'key' => env('ALIYUN_SMS_ACCESS_KEY'),
-    'secret' => env('ALIYUN_SMS_ACCESS_SECRET'),
+    'key' => env('ALIYUN_SMS_ACCESS_KEY_ID', env('ALIYUN_ACCESS_KEY_ID')),
+    'secret' => env('ALIYUN_SMS_ACCESS_KEY_SECRET', env('ALIYUN_ACCESS_KEY_SECRET')),
 ],
 
 ...
