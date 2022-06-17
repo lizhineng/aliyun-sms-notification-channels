@@ -22,6 +22,7 @@ class AliyunSmsChannel
      * @param  mixed  $notifiable
      * @param  Notification  $notification
      * @return void
+     *
      * @throws CouldNotSendNotification
      */
     public function send($notifiable, Notification $notification)
