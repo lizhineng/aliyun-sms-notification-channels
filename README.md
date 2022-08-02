@@ -61,7 +61,7 @@ class OrderPlaced extends Notification
 {
     public function via($notifiable)
     {
-        return 'dysms';
+        return ['dysms'];
     }
 
     public function toDysms($notifiable)
