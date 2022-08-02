@@ -5,7 +5,7 @@ This package makes it easy to send notifications using [Alibaba Cloud Short Mess
 ## Contents
 
 - [Installation](#installation)
-	- [Setting up the Aliyun SMS service](#setting-up-the-aliyun-sms-service)
+	- [Setting up Dysms service](#setting-up-dysms-service)
 - [Usage](#usage)
 	- [Available Message methods](#available-message-methods)
 - [Changelog](#changelog)
@@ -23,7 +23,7 @@ You can install the package via Composer:
 composer require lizhineng/notification-channel-aliyun-sms
 ```
 
-### Setting up the Aliyun SMS service
+### Setting up Dysms service
 
 The package includes a [configuration file](config/dysms.php). However, you are not required to export this configuration file to your own application. You can simply set the `DYSMS_KEY` and `DYSMS_SECRET` environment variables to define your Dysms API credentials which may be accessed from your [Aliyun RAM dashboard](https://ram.console.aliyun.com).
 
@@ -54,19 +54,19 @@ You can now use the channel in your `via()` method inside the notification. **No
 
 ```php
 use Illuminate\Notifications\Notification;
-use Zhineng\NotificationChannels\AliyunSms\AliyunSmsChannel;
-use Zhineng\NotificationChannels\AliyunSms\AliyunSmsMessage;
+use Zhineng\Notifications\Channels\DysmsChannel;
+use Zhineng\Notifications\Messages\DysmsMessage;
 
 class OrderPlaced extends Notification
 {
     public function via($notifiable)
     {
-        return [AliyunSmsChannel::class]; // or 'aliyun-sms'
+        return 'dysms';
     }
 
-    public function toAliyunSms($notifiable)
+    public function toDysms($notifiable)
     {
-        return (new AliyunSmsMessage)
+        return (new DysmsMessage)
             ->using('SMS_TEMPLATE_CODE')
             ->with(['if' => 'any'])
             ->signedBy('YOUR_PERMITTED_SIGNATURE');
@@ -74,12 +74,12 @@ class OrderPlaced extends Notification
 }
 ```
 
-In order to let the channel know who's the recipient, add the method `routeNotificationForAliyunSms` to your notifiable class.
+In order to let the channel know who's the recipient, add the method `routeNotificationForDysms` to your notifiable class.
 
 ```php
 // App\Models\User.php
 
-public function routeNotificationForAliyunSms($notification)
+public function routeNotificationForDysms($notification)
 {
     return $this->phone_number;
 }
