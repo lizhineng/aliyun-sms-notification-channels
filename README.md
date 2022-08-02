@@ -25,19 +25,27 @@ composer require lizhineng/notification-channel-aliyun-sms
 
 ### Setting up the Aliyun SMS service
 
-Generate your API credentials from your Aliyun console, then configure the services file...
+The package includes a [configuration file](config/dysms.php). However, you are not required to export this configuration file to your own application. You can simply set the `DYSMS_KEY` and `DYSMS_SECRET` environment variables to define your Dysms API credentials which may be accessed from your [Aliyun RAM dashboard](https://ram.console.aliyun.com).
 
-```php
-// config/services.php
+Based on the principle of least privilege, the only required RAM permission to the credentials is `dysms:SendSms`, then you're good to go. Here is an example policy in case you need it:
 
-...
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "dysms:SendSms",
+            "Resource": "*"
+        }
+    ]
+}
+```
 
-'aliyun_sms' => [
-    'key' => env('ALIYUN_SMS_ACCESS_KEY_ID', env('ALIYUN_ACCESS_KEY_ID')),
-    'secret' => env('ALIYUN_SMS_ACCESS_KEY_SECRET', env('ALIYUN_ACCESS_KEY_SECRET')),
-],
+After defining your keys, you may set a `DYSMS_SIGNATURE` environment variable that defines the signature that your SMS messages should be attached to by default. You may apply your signature on [Aliyun SMS Console](https://dysms.console.aliyun.com):
 
-...
+```dotenv
+DYSMS_SIGNATURE=YOUR_COMPANY_NAME
 ```
 
 ## Usage
