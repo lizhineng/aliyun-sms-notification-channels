@@ -20,7 +20,7 @@ This package makes it easy to send notifications using [Alibaba Cloud Short Mess
 You can install the package via Composer:
 
 ```bash
-composer require lizhineng/notification-channel-aliyun-sms
+composer require lizhineng/dysms-notification-channel
 ```
 
 ### Setting up Dysms service
