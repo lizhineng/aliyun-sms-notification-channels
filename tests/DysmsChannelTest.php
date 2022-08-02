@@ -1,23 +1,23 @@
 <?php
 
-namespace Zhineng\NotificationChannels\AliyunSms\Test;
+namespace Zhineng\Notifications\Tests;
 
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use PHPUnit\Framework\TestCase;
-use Zhineng\NotificationChannels\AliyunSms\AliyunSmsChannel;
-use Zhineng\NotificationChannels\AliyunSms\AliyunSmsMessage;
+use Zhineng\Notifications\Channels\DysmsChannel;
+use Zhineng\Notifications\Messages\DysmsMessage;
 
-class AliyunSmsChannelTest extends TestCase
+class DysmsChannelTest extends TestCase
 {
     public function test_sends_notification()
     {
         $notifiable = new TestNotifiable;
 
         $client = $this->getMockBuilder(Dysmsapi::class)->disableOriginalConstructor()->getMock();
-        $channel = new AliyunSmsChannel($client);
+        $channel = new DysmsChannel($client);
 
         $client->expects($this->once())
             ->method('sendSms')
@@ -44,7 +44,7 @@ class TestNotifiable
 {
     use Notifiable;
 
-    public function routeNotificationForAliyunSms()
+    public function routeNotificationForDysms()
     {
         return '11111111111';
     }
@@ -52,9 +52,9 @@ class TestNotifiable
 
 class TestNotification extends Notification
 {
-    public function toAliyunSms($notifiable): AliyunSmsMessage
+    public function toDysms($notifiable): DysmsMessage
     {
-        return (new AliyunSmsMessage)
+        return (new DysmsMessage)
             ->using('SMS_1234')
             ->with(['foo' => 'bar'])
             ->signedBy('baz')

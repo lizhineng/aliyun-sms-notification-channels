@@ -1,19 +1,19 @@
 <?php
 
-namespace Zhineng\NotificationChannels\AliyunSms\Test;
+namespace Zhineng\Notifications\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Zhineng\NotificationChannels\AliyunSms\AliyunSmsMessage;
+use Zhineng\Notifications\Messages\DysmsMessage;
 
-class AliyunSmsMessageTest extends TestCase
+class DysmsMessageTest extends TestCase
 {
-    protected AliyunSmsMessage $message;
+    protected DysmsMessage $message;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->message = (new AliyunSmsMessage)
+        $this->message = (new DysmsMessage)
             ->using('SMS_1234')
             ->with(['foo' => 'bar'])
             ->signedBy('baz')
@@ -22,7 +22,7 @@ class AliyunSmsMessageTest extends TestCase
 
     public function test_has_template_id()
     {
-        $this->assertEquals('SMS_1234', $this->message->templateId);
+        $this->assertEquals('SMS_1234', $this->message->templateCode);
     }
 
     public function test_has_payload()

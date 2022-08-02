@@ -1,6 +1,6 @@
 <?php
 
-namespace Zhineng\NotificationChannels\AliyunSms\Exceptions;
+namespace Zhineng\Notifications\Exceptions;
 
 use AlibabaCloud\Tea\Exception\TeaUnableRetryError;
 use Exception;

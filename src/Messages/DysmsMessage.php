@@ -1,15 +1,15 @@
 <?php
 
-namespace Zhineng\NotificationChannels\AliyunSms;
+namespace Zhineng\Notifications\Messages;
 
-class AliyunSmsMessage
+class DysmsMessage
 {
     /**
      * The message template code.
      *
      * @var string
      */
-    public string $templateId;
+    public string $templateCode;
 
     /**
      * The parameters of the message.
@@ -33,20 +33,20 @@ class AliyunSmsMessage
     public ?string $serialNumber = null;
 
     /**
-     * Set the SMS template code.
+     * Set template code for the message.
      *
-     * @param  string  $templateId
+     * @param  string  $templateCode
      * @return $this
      */
-    public function using(string $templateId)
+    public function using(string $templateCode)
     {
-        $this->templateId = $templateId;
+        $this->templateCode = $templateCode;
 
         return $this;
     }
 
     /**
-     * Set the payload for the message.
+     * Set payload for the message.
      *
      * @param  array  $payload
      * @return $this
@@ -59,7 +59,7 @@ class AliyunSmsMessage
     }
 
     /**
-     * Set the message signature.
+     * Set signature for the message.
      *
      * @param  string  $signature
      * @return $this
