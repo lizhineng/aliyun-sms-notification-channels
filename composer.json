@@ -1,12 +1,8 @@
 {
-    "name": "lizhineng/notification-channel-aliyun-sms",
-    "description": "Aliyun SMS Notification Channel for Laravel.",
-    "keywords": [
-        "aliyun sms",
-        "laravel",
-        "laravel notification channel"
-    ],
-    "homepage": "https://github.com/lizhineng/notification-channel-aliyun-sms",
+    "name": "lizhineng/dysms-notification-channel",
+    "description": "Dysms Notification Channel for Laravel.",
+    "keywords": ["notifications", "laravel", "dysms", "aliyun-sms"],
+    "homepage": "https://github.com/lizhineng/dysms-notification-channel",
     "license": "MIT",
     "authors": [
         {
@@ -26,12 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Zhineng\\NotificationChannels\\AliyunSms\\": "src"
+            "Zhineng\\Notifications\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Zhineng\\NotificationChannels\\AliyunSms\\Test\\": "tests"
+            "Zhineng\\Notifications\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -44,7 +40,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Zhineng\\NotificationChannels\\AliyunSms\\AliyunSmsServiceProvider"
+                "Zhineng\\Notifications\\DysmsServiceProvider"
             ]
         }
     }

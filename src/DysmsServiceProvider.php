@@ -1,14 +1,15 @@
 <?php
 
-namespace Zhineng\NotificationChannels\AliyunSms;
+namespace Zhineng\Notifications;
 
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
 use Darabonba\OpenApi\Models\Config;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\ServiceProvider;
+use Zhineng\Notifications\Channels\DysmsChannel;
 
-class AliyunSmsServiceProvider extends ServiceProvider
+class DysmsServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
@@ -24,10 +25,10 @@ class AliyunSmsServiceProvider extends ServiceProvider
         });
 
         Notification::resolved(function (ChannelManager $service) {
-            $service->extend('aliyun-sms', function ($app) {
+            $service->extend('dysms', function ($app) {
                 $config = $app['config']['dysms'];
 
-                return new AliyunSmsChannel($app->make(Dysmsapi::class), $config['signature']);
+                return new DysmsChannel($app->make(Dysmsapi::class), $config['signature']);
             });
         });
     }

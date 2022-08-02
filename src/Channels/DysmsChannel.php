@@ -1,14 +1,14 @@
 <?php
 
-namespace Zhineng\NotificationChannels\AliyunSms;
+namespace Zhineng\Notifications\Channels;
 
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
 use AlibabaCloud\Tea\Exception\TeaUnableRetryError;
 use Illuminate\Notifications\Notification;
-use Zhineng\NotificationChannels\AliyunSms\Exceptions\CouldNotSendNotification;
+use Zhineng\Notifications\Exceptions\CouldNotSendNotification;
 
-class AliyunSmsChannel
+class DysmsChannel
 {
     public function __construct(
         protected Dysmsapi $client,
@@ -24,21 +24,21 @@ class AliyunSmsChannel
      * @param  Notification  $notification
      * @return void
      *
-     * @throws CouldNotSendNotification
+     * @throws \Zhineng\Notifications\Exceptions\CouldNotSendNotification
      */
     public function send($notifiable, Notification $notification)
     {
-        if (! $to = $notifiable->routeNotificationFor('aliyun-sms', $notification)) {
+        if (! $to = $notifiable->routeNotificationFor('dysms', $notification)) {
             return;
         }
 
-        $message = $notification->toAliyunSms($notifiable);
+        $message = $notification->toDysms($notifiable);
 
         try {
             $this->client->sendSms(new SendSmsRequest([
                 'phoneNumbers' => $to,
                 'signName' => $message->signature ?: $this->signature,
-                'templateCode' => $message->templateId,
+                'templateCode' => $message->templateCode,
                 'templateParam' => json_encode($message->payload),
                 'outId' => $message->serialNumber,
             ]));
