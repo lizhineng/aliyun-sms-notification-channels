@@ -11,7 +11,8 @@ use Zhineng\NotificationChannels\AliyunSms\Exceptions\CouldNotSendNotification;
 class AliyunSmsChannel
 {
     public function __construct(
-        protected Dysmsapi $client
+        protected Dysmsapi $client,
+        protected ?string $signature = null
     ) {
         //
     }
@@ -27,18 +28,16 @@ class AliyunSmsChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        $message = $notification->toAliyunSms($notifiable);
-
-        $phoneNumber = $notifiable->routeNotificationFor('aliyun-sms', $notification);
-
-        if (! $phoneNumber && ! $message instanceof AliyunSmsMessage) {
+        if (! $to = $notifiable->routeNotificationFor('aliyun-sms', $notification)) {
             return;
         }
 
+        $message = $notification->toAliyunSms($notifiable);
+
         try {
             $this->client->sendSms(new SendSmsRequest([
-                'phoneNumbers' => $phoneNumber,
-                'signName' => $message->signature,
+                'phoneNumbers' => $to,
+                'signName' => $message->signature ?: $this->signature,
                 'templateCode' => $message->templateId,
                 'templateParam' => json_encode($message->payload),
                 'outId' => $message->serialNumber,

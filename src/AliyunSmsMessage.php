@@ -19,11 +19,11 @@ class AliyunSmsMessage
     public array $payload = [];
 
     /**
-     * The signature of the message.
+     * The signature for the message.
      *
-     * @var string
+     * @var string|null
      */
-    public string $signature;
+    public ?string $signature = null;
 
     /**
      * The serial number you can mark the message.
@@ -59,7 +59,7 @@ class AliyunSmsMessage
     }
 
     /**
-     * The signature of the message.
+     * Set the message signature.
      *
      * @param  string  $signature
      * @return $this
